@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>115年義工講習 · 音控標準操作手冊</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            padding: 16px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 480px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .header h1 {
+            font-size: 22px;
+            color: #38bdf8;
+            margin: 0 0 6px 0;
+            letter-spacing: 1px;
+        }
+        .header p {
+            font-size: 15px;
+            color: #94a3b8;
+            margin: 0;
+            font-weight: bold;
+        }
+        .system-rule {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid #38bdf8;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #e0f2fe;
+            font-size: 15px;
+        }
+        .system-rule span { font-weight: bold; color: #38bdf8; }
+
+        .mode-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 6px solid #38bdf8;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+        .mode-card.mode-1 { border-left-color: #3b82f6; }
+        .mode-card.mode-2 { border-left-color: #ea580c; }
+        .mode-card.mode-3 { border-left-color: #16a34a; }
+
+        .mode-title {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        .mode-title .badge {
+            font-size: 13px;
+            background: #0f172a;
+            padding: 3px 10px;
+            border-radius: 20px;
+            color: #cbd5e1;
+            font-weight: normal;
+        }
+
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #334155;
+            font-size: 16px;
+        }
+        .table-row:last-of-type { border-bottom: none; }
+        
+        .channel {
+            font-weight: bold;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .fader-status {
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 100px;
+            text-align: center;
+        }
+        .fader-up { background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid #4ade80; }
+        .fader-down { background: rgba(248, 113, 113, 0.1); color: #94a3b8; border: 1px solid #475569; }
+
+        .warning-box {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .warn-orange { border: 1px solid #ea580c; color: #fdba74; }
+        .warn-blue { border: 1px solid #3b82f6; color: #bfdbfe; }
+        .warn-green { border: 1px solid #16a34a; color: #bbf7d0; }
+        
+        .footer {
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🎛️ 115年義工講習</h1>
+        <p>台北講堂 · 音控標準操作手冊 (直覺推桿版)</p>
+    </div>
+
+    <div class="system-rule">
+        💡 系統新準則：<span>所聽即所傳</span><br>
+        無須調整 MON 旋鈕，全憑「推桿」控制全場。
+    </div>
+
+    <div class="mode-card mode-1">
+        <div class="mode-title">🎤 1. 主講者模式 <span class="badge">一般講課</span></div>
+        <div class="table-row">
+            <span class="channel">🎙️ 現場麥克風 (A/B)</span>
+            <span class="fader-status fader-up">⬆️ 推桿推起</span>
+        </div>
+        <div class="table-row">
+            <span class="channel">💻 電腦音源 (多媒體)</span>
+            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
+        </div>
+        <div class="table-row">
+            <span class="channel">🌐 遠端音源 (連線)</span>
+            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
+        </div>
+        <div class="warning-box warn-blue">
+            ✅ 現場法師/老師講課聲音，將同步由現場喇叭播出，並自動上傳至雲端直播。
+        </div>
+    </div>
+
+    <div class="mode-card mode-2">
+        <div class="mode-title">📽️ 2. 多媒體模式 <span class="badge">播放影片/音樂</span></div>
+        <div class="table-row">
+            <span class="channel">🎙️ 現場麥克風 (A/B)</span>
+            <span class="fader-status fader-down" style="color: #f87171; border-color: #f87171;">⬇️ 務必拉下</span>
+        </div>
+        <div class="table-row">
+            <span class="channel">💻 電腦音源 (多媒體)</span>
+            <span class="fader-status fader-up">⬆️ 推桿推起</span>
+        </div>
+        <div class="table-row">
+            <span class="channel">🌐 遠端音源 (連線)</span>
+            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
+        </div>
+        <div class="warning-box warn-orange">
+            ⚠️ <strong>防空間回音重點：</strong><br>播放影片時，務必將「現場麥克風」拉下，以免喇叭播出的聲音被麥克風重複收錄。
+        </div>
+    </div>
+
+    <div class="mode-card mode-3">
+        <div class="mode-title">🌐 3. 雙向交流模式 <span class="badge">遠端發言連線</span></div>
+        <div class="table-row">
+            <span class="channel">🎙️ 現場麥克風 (A/B)</span>
+            <span class="fader-status fader-up">⬆️ 推桿推起</span>
+        </div>
+        <div class="table-row">
+            <span class="channel">💻 電腦音源 (多媒體)</span>
+            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
+        </div>
+        <div class="table-row">
+            <span class="channel">🌐 遠端音源 (連線)</span>
+            <span class="fader-status fader-up">⬆️ 推桿推起</span>
+        </div>
+        <div class="warning-box warn-green">
+            ✅ 軟體會自動啟動回音消除 (AEC) 功能。<br>
+            ✅ 雙方推桿皆保持推起即可順暢進行問答，無須擔心迴授。
+        </div>
+    </div>
+
+    <div class="footer">
+        環控處設備組 敬製<br>
+        操作時如有任何疑問，請隨時洽詢現場技術指導人員
+    </div>
+</div>
+</body>
+</html>
