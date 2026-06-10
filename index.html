@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>115年義工講習 · 音控標準操作手冊</title>
+    <title>115年義工講習 · 音控實體推桿操作 SOP</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -17,7 +17,7 @@
             align-items: center;
         }
         .container {
-            max-width: 480px;
+            max-width: 640px;
             width: 100%;
         }
         .header {
@@ -28,7 +28,6 @@
             font-size: 22px;
             color: #38bdf8;
             margin: 0 0 6px 0;
-            letter-spacing: 1px;
         }
         .header p {
             font-size: 15px;
@@ -36,173 +35,340 @@
             margin: 0;
             font-weight: bold;
         }
-        .system-rule {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid #38bdf8;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 16px;
-            color: #e0f2fe;
-            font-size: 15px;
-        }
-        .system-rule span { font-weight: bold; color: #38bdf8; }
-
-        .mode-card {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-            border-left: 6px solid #38bdf8;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-        }
-        .mode-card.mode-1 { border-left-color: #3b82f6; }
-        .mode-card.mode-2 { border-left-color: #ea580c; }
-        .mode-card.mode-3 { border-left-color: #16a34a; }
-
-        .mode-title {
-            font-size: 18px;
-            font-weight: bold;
+        
+        /* 導覽按鈕 */
+        .control-panel {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
         }
-        .mode-title .badge {
-            font-size: 13px;
-            background: #0f172a;
-            padding: 3px 10px;
-            border-radius: 20px;
-            color: #cbd5e1;
-            font-weight: normal;
+        button {
+            flex: 1;
+            padding: 12px 6px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .btn-mode1 { background: #2563eb; }
+        .btn-mode2 { background: #ea580c; }
+        .btn-mode3 { background: #16a34a; }
+        .btn-reset { background: #475569; max-width: 70px; }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* 擬真混音器外殼 */
+        .mixer-board {
+            background: #1e293b;
+            border: 3px solid #334155;
+            border-radius: 16px;
+            padding: 20px 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            margin-bottom: 16px;
+        }
+        .mixer-title {
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 6px;
         }
 
-        .table-row {
+        /* 軌道排列容器 */
+        .fader-grid {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px dashed #334155;
-            font-size: 16px;
+            height: 280px;
+            background: #111827;
+            border-radius: 8px;
+            padding: 15px 5px;
+            position: relative;
         }
-        .table-row:last-of-type { border-bottom: none; }
-        
-        .channel {
+
+        /* 單一音軌條 */
+        .fader-channel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            border-right: 1px dashed #27272a;
+        }
+        .fader-channel:last-child { border-right: none; border-left: 2px solid #4b5563; } /* Master/Ctrl 隔離 */
+
+        .ch-name {
+            font-size: 11px;
             font-weight: bold;
-            color: #e2e8f0;
+            color: #94a3b8;
+            text-align: center;
+            height: 32px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            line-height: 1.2;
         }
-        
-        .fader-status {
-            font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            min-width: 100px;
-            text-align: center;
-        }
-        .fader-up { background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid #4ade80; }
-        .fader-down { background: rgba(248, 113, 113, 0.1); color: #94a3b8; border: 1px solid #475569; }
 
-        .warning-box {
-            background: #0f172a;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 12px;
-            font-size: 14px;
-            line-height: 1.5;
+        /* 實體推桿軌道線 */
+        .slider-track {
+            width: 6px;
+            background: #000;
+            border-radius: 3px;
+            position: absolute;
+            top: 40px;
+            bottom: 15px;
+            display: flex;
+            justify-content: center;
         }
-        .warn-orange { border: 1px solid #ea580c; color: #fdba74; }
-        .warn-blue { border: 1px solid #3b82f6; color: #bfdbfe; }
-        .warn-green { border: 1px solid #16a34a; color: #bbf7d0; }
+
+        /* 實體推桿帽 (Fader Cap) */
+        .fader-knob {
+            width: 24px;
+            height: 40px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            position: absolute;
+            bottom: 15px;
+            cursor: pointer;
+            transition: bottom 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.8), inset 0 2px 0 #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 推桿帽中間的中心紅/白線 */
+        .fader-knob::after {
+            content: "";
+            width: 100%;
+            height: 3px;
+            background: #ef4444;
+        }
         
-        .footer {
-            text-align: center;
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 20px;
-            padding-bottom: 20px;
+        /* 旋鈕型態 (用於 CTRL OUT) */
+        .knob-container {
+            position: absolute;
+            top: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        .rotary-knob {
+            width: 36px;
+            height: 36px;
+            background: #374151;
+            border: 3px solid #6b7280;
+            border-radius: 50%;
+            transition: transform 0.5s, border-color 0.5s;
+            position: relative;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .rotary-knob::before {
+            content: "";
+            width: 4px;
+            height: 12px;
+            background: #f59e0b;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 動態亮燈提示 */
+        .status-led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #374151;
+            margin-top: 6px;
+            transition: 0.3s;
+        }
+
+        /* 文字提示面板 */
+        .info-panel {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 15px;
+            line-height: 1.6;
+            min-height: 110px;
+        }
+        
+        /* 顏色狀態定義 */
+        .active-blue { color: #3b82f6 !important; }
+        .active-orange { color: #ea580c !important; }
+        .active-green { color: #16a34a !important; }
+        .danger-red { color: #ef4444 !important; font-weight: bold; }
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="header">
         <h1>🎛️ 115年義工講習</h1>
-        <p>台北講堂 · 音控標準操作手冊 (直覺推桿版)</p>
+        <p>台北講堂 · 實體混音器推桿對照手冊</p>
     </div>
 
-    <div class="system-rule">
-        💡 系統新準則：<span>所聽即所傳</span><br>
-        無須調整 MON 旋鈕，全憑「推桿」控制全場。
+    <div class="control-panel">
+        <button class="btn-mode1" onclick="setMixerMode('mode1')">1. 主講者模式</button>
+        <button class="btn-mode2" onclick="setMixerMode('mode2')">2. 多媒體模式</button>
+        <button class="btn-mode3" onclick="setMixerMode('mode3')">3. 雙向交流模式</button>
+        <button class="btn-reset" onclick="setMixerMode('reset')">↻ 重置</button>
     </div>
 
-    <div class="mode-card mode-1">
-        <div class="mode-title">🎤 1. 主講者模式 <span class="badge">一般講課</span></div>
-        <div class="table-row">
-            <span class="channel">🎙️ 現場麥克風 (A/B)</span>
-            <span class="fader-status fader-up">⬆️ 推桿推起</span>
-        </div>
-        <div class="table-row">
-            <span class="channel">💻 電腦音源 (多媒體)</span>
-            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
-        </div>
-        <div class="table-row">
-            <span class="channel">🌐 遠端音源 (連線)</span>
-            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
-        </div>
-        <div class="warning-box warn-blue">
-            ✅ 現場法師/老師講課聲音，將同步由現場喇叭播出，並自動上傳至雲端直播。
-        </div>
-    </div>
-
-    <div class="mode-card mode-2">
-        <div class="mode-title">📽️ 2. 多媒體模式 <span class="badge">播放影片/音樂</span></div>
-        <div class="table-row">
-            <span class="channel">🎙️ 現場麥克風 (A/B)</span>
-            <span class="fader-status fader-down" style="color: #f87171; border-color: #f87171;">⬇️ 務必拉下</span>
-        </div>
-        <div class="table-row">
-            <span class="channel">💻 電腦音源 (多媒體)</span>
-            <span class="fader-status fader-up">⬆️ 推桿推起</span>
-        </div>
-        <div class="table-row">
-            <span class="channel">🌐 遠端音源 (連線)</span>
-            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
-        </div>
-        <div class="warning-box warn-orange">
-            ⚠️ <strong>防空間回音重點：</strong><br>播放影片時，務必將「現場麥克風」拉下，以免喇叭播出的聲音被麥克風重複收錄。
-        </div>
-    </div>
-
-    <div class="mode-card mode-3">
-        <div class="mode-title">🌐 3. 雙向交流模式 <span class="badge">遠端發言連線</span></div>
-        <div class="table-row">
-            <span class="channel">🎙️ 現場麥克風 (A/B)</span>
-            <span class="fader-status fader-up">⬆️ 推桿推起</span>
-        </div>
-        <div class="table-row">
-            <span class="channel">💻 電腦音源 (多媒體)</span>
-            <span class="fader-status fader-down">⬇️ 推桿拉下</span>
-        </div>
-        <div class="table-row">
-            <span class="channel">🌐 遠端音源 (連線)</span>
-            <span class="fader-status fader-up">⬆️ 推桿推起</span>
-        </div>
-        <div class="warning-box warn-green">
-            ✅ 軟體會自動啟動回音消除 (AEC) 功能。<br>
-            ✅ 雙方推桿皆保持推起即可順暢進行問答，無須擔心迴授。
+    <div class="mixer-board">
+        <div class="mixer-title">🎛️ 台北講堂 RX1202FX 實體推桿對照面板</div>
+        
+        <div class="fader-grid">
+            <div class="fader-channel">
+                <div class="ch-name" id="name-ch1">老師<br>領夾</div>
+                <div class="status-led" id="led-ch1"></div>
+                <div class="slider-track"></div>
+                <div class="fader-knob" id="knob-ch1"></div>
+            </div>
+            <div class="fader-channel">
+                <div class="ch-name" id="name-ch2">司儀<br>手握</div>
+                <div class="status-led" id="led-ch2"></div>
+                <div class="slider-track"></div>
+                <div class="fader-knob" id="knob-ch2"></div>
+            </div>
+            <div class="fader-channel">
+                <div class="ch-name" id="name-ch3">首長桌<br>手握</div>
+                <div class="status-led" id="led-ch3"></div>
+                <div class="slider-track"></div>
+                <div class="fader-knob" id="knob-ch3"></div>
+            </div>
+            <div class="fader-channel">
+                <div class="ch-name" id="name-ch4">提問<br>手握</div>
+                <div class="status-led" id="led-ch4"></div>
+                <div class="slider-track"></div>
+                <div class="fader-knob" id="knob-ch4"></div>
+            </div>
+            <div class="fader-channel">
+                <div class="ch-name" id="name-ch5">會議室<br>筆電</div>
+                <div class="status-led" id="led-ch5"></div>
+                <div class="slider-track"></div>
+                <div class="fader-knob" id="knob-ch5"></div>
+            </div>
+            <div class="fader-channel">
+                <div class="ch-name" id="name-ch6">導播機<br>音源</div>
+                <div class="status-led" id="led-ch6"></div>
+                <div class="slider-track"></div>
+                <div class="fader-knob" id="knob-ch6"></div>
+            </div>
+            <div class="fader-channel">
+                <div class="ch-name" id="name-ctrl" style="color:#f59e0b;">CTRL<br>OUT</div>
+                <div class="status-led" id="led-ctrl"></div>
+                <div class="knob-container">
+                    <div class="rotary-knob" id="rotary-ctrl"></div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="footer">
-        環控處設備組 敬製<br>
-        操作時如有任何疑問，請隨時洽詢現場技術指導人員
+    <div class="info-panel" id="info-text">
+        系統就緒。請點選上方切換模式，下方推桿將自動移動至標準作業高度。
     </div>
 </div>
+
+<script>
+    function setMixerMode(mode) {
+        // 抓取所有實體元素 (內部邏輯已同步更新對應新的軌道排序)
+        const faders = {
+            ch1: document.getElementById('knob-ch1'),
+            ch2: document.getElementById('knob-ch2'),
+            ch3: document.getElementById('knob-ch3'),
+            ch4: document.getElementById('knob-ch4'),
+            ch5: document.getElementById('knob-ch5'), // 會議室筆電
+            ch6: document.getElementById('knob-ch6')  // 導播機音源
+        };
+        const leds = {
+            ch1: document.getElementById('led-ch1'),
+            ch2: document.getElementById('led-ch2'),
+            ch3: document.getElementById('led-ch3'),
+            ch4: document.getElementById('led-ch4'),
+            ch5: document.getElementById('led-ch5'),
+            ch6: document.getElementById('led-ch6'),
+            ctrl: document.getElementById('led-ctrl')
+        };
+        const names = {
+            ch1: document.getElementById('name-ch1'),
+            ch2: document.getElementById('name-ch2'),
+            ch3: document.getElementById('name-ch3'),
+            ch4: document.getElementById('name-ch4'),
+            ch5: document.getElementById('name-ch5'),
+            ch6: document.getElementById('name-ch6'),
+            ctrl: document.getElementById('name-ctrl')
+        };
+        const ctrlKnob = document.getElementById('rotary-ctrl');
+        const info = document.getElementById('info-text');
+
+        // 清除所有動態亮顯樣式
+        Object.values(names).forEach(n => n.className = 'ch-name');
+        Object.values(leds).forEach(l => { l.style.background = '#374151'; l.style.boxShadow = 'none'; });
+        ctrlKnob.style.transform = 'rotate(0deg)';
+        ctrlKnob.style.borderColor = '#6b7280';
+
+        if (mode === 'mode1') {
+            // 1. 主講者模式：老師領夾推起、司儀推起、其餘全拉
+            faders.ch1.style.bottom = '140px'; leds.ch1.style.background = '#3b82f6'; leds.ch1.style.boxShadow = '0 0 8px #3b82f6'; names.ch1.classList.add('active-blue');
+            faders.ch2.style.bottom = '140px'; leds.ch2.style.background = '#3b82f6'; leds.ch2.style.boxShadow = '0 0 8px #3b82f6'; names.ch2.classList.add('active-blue');
+            faders.ch3.style.bottom = '15px';
+            faders.ch4.style.bottom = '15px';
+            faders.ch5.style.bottom = '15px'; // 會議室筆電
+            faders.ch6.style.bottom = '15px'; // 導播機音源
+            
+            ctrlKnob.style.transform = 'rotate(90deg)'; // 正常轉開監聽
+            ctrlKnob.style.borderColor = '#3b82f6';
+            leds.ctrl.style.background = '#3b82f6';
+
+            info.innerHTML = "▶ <b>【1. 主講者模式】操作要點：</b><br>1. <b>老師領夾</b>推起上課；非上課時段領夾務必全面拉掉。<br>2. <b>司儀手握</b>全場保持推起狀態（可視情況拉掉）。<br>3. 導播機音源與會議室筆電一律關閉拉到底。";
+
+        } else if (mode === 'mode2') {
+            // 2. 多媒體模式：導播機推起(Ch6)、現場麥克風務必拉下（司儀留）
+            faders.ch1.style.bottom = '15px';
+            faders.ch2.style.bottom = '140px'; leds.ch2.style.background = '#ea580c'; names.ch2.classList.add('active-orange'); // 視情況留司儀
+            faders.ch3.style.bottom = '15px';
+            faders.ch4.style.bottom = '15px';
+            faders.ch5.style.bottom = '15px'; // 會議室筆電
+            faders.ch6.style.bottom = '140px'; leds.ch6.style.background = '#ea580c'; leds.ch6.style.boxShadow = '0 0 8px #ea580c'; names.ch6.classList.add('active-orange'); // 導播機音源
+            
+            ctrlKnob.style.transform = 'rotate(-135deg)'; // 旋鈕強制作廢歸零
+            ctrlKnob.style.borderColor = '#ef4444';
+            leds.ctrl.style.background = '#ef4444'; leds.ctrl.style.boxShadow = '0 0 8px #ef4444';
+            names.ctrl.classList.add('danger-red');
+
+            info.innerHTML = "▶ <b>【2. 多媒體模式】操作要點：</b><br>1. 推起最右側的<b>導播機音源</b>播放小筆電影片。<br>2. 老師領夾、首長、提問麥克風<b>務必拉下</b>，司儀手握視流程串場保留。<br>3. <span class='danger-red'>【核心防迴圈機制】</span>右側 <b>CTRL OUT 旋鈕務必歸零（旋到底關閉）</b>，切斷給導播機的回送線！影片播完請務必復原。";
+
+        } else if (mode === 'mode3') {
+            // 3. 雙向交流模式：會議室筆電推起(Ch5)、首長桌+司儀+提問推起
+            faders.ch1.style.bottom = '15px';
+            faders.ch2.style.bottom = '140px'; leds.ch2.style.background = '#16a34a'; leds.ch2.style.boxShadow = '0 0 8px #16a34a'; names.ch2.classList.add('active-green');
+            faders.ch3.style.bottom = '140px'; leds.ch3.style.background = '#16a34a'; leds.ch3.style.boxShadow = '0 0 8px #16a34a'; names.ch3.classList.add('active-green');
+            faders.ch4.style.bottom = '140px'; leds.ch4.style.background = '#16a34a'; leds.ch4.style.boxShadow = '0 0 8px #16a34a'; names.ch4.classList.add('active-green');
+            faders.ch5.style.bottom = '140px'; leds.ch5.style.background = '#16a34a'; leds.ch5.style.boxShadow = '0 0 8px #16a34a'; names.ch5.classList.add('active-green'); // 會議室筆電
+            faders.ch6.style.bottom = '15px'; // 導播機音源
+            
+            ctrlKnob.style.transform = 'rotate(90deg)';
+            ctrlKnob.style.borderColor = '#16a34a';
+            leds.ctrl.style.background = '#16a34a';
+
+            info.innerHTML = "▶ <b>【3. 雙向交流模式】操作要點：</b><br>1. 老師上課結束，<b>老師領夾務必完全拉掉（關閉）</b>。<br>2. 推起<b>會議室筆電音源</b>接收外地講堂發言。<br>3. 現場<b>首長桌手握、司儀手握、提問手握（提問時）全數推起</b>。遠端回聲由 Meet 自動消除。";
+
+        } else {
+            // 重置狀態
+            Object.values(faders).forEach(f => f.style.bottom = '15px');
+            info.innerHTML = "系統已復位。請點選上方切換模式查看實體推桿高度規範。";
+        }
+    }
+</script>
+
 </body>
 </html>
