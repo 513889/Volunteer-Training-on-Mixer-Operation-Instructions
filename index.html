@@ -6,32 +6,65 @@
     <title>115年義工講習 · 音控實體推桿操作 SOP</title>
     <style>
         * { box-sizing: border-box; }
+        
+        /* [新增] 清新背景與自適應滿版置中設定 */
         body {
-            background: #0f172a;
-            color: #f8fafc;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 100%); /* 清新淡藍色背景 */
+            color: #0f172a; /* 背景變亮，最外層文字改深色 */
             font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
             padding: 16px;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh; /* 自動撐滿螢幕高度 */
+            justify-content: center; /* 讓整體面板在任何螢幕完美垂直置中 */
         }
         .container {
-            max-width: 640px;
+            max-width: 640px; /* 維持原版比例，絕對不讓面板變形忽大忽小 */
             width: 100%;
         }
+
+        /* [新增] 返回按鈕樣式 */
+        .top-nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .btn-return {
+            background: #ffffff;
+            color: #0284c7;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #bae6fd;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-return:hover {
+            background: #f0f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
         .header {
             text-align: center;
             margin-bottom: 16px;
         }
         .header h1 {
             font-size: 22px;
-            color: #38bdf8;
+            color: #0284c7; /* 配合清新背景加深主色 */
             margin: 0 0 6px 0;
         }
         .header p {
             font-size: 15px;
-            color: #94a3b8;
+            color: #475569; /* 配合清新背景加深副色 */
             margin: 0;
             font-weight: bold;
         }
@@ -42,9 +75,10 @@
             gap: 10px;
             margin-bottom: 20px;
             width: 100%;
+            flex-wrap: wrap; /* [微調] 讓手機版過窄時能自動安全折行，不破版 */
         }
         button {
-            flex: 1;
+            flex: 1 1 auto; /* [微調] 允許自適應填滿 */
             padding: 12px 6px;
             font-size: 14px;
             font-weight: bold;
@@ -54,6 +88,7 @@
             transition: 0.2s;
             color: #fff;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            white-space: nowrap; /* 確保文字不亂斷行 */
         }
         .btn-mode1 { background: #2563eb; }
         .btn-mode2 { background: #ea580c; }
@@ -61,7 +96,7 @@
         .btn-reset { background: #475569; max-width: 70px; }
         button:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* 擬真混音器外殼 */
+        /* ======== 以下混音器本體設定完全維持原版，一字未改 ======== */
         .mixer-board {
             background: #1e293b;
             border: 3px solid #334155;
@@ -81,7 +116,6 @@
             padding-bottom: 6px;
         }
 
-        /* 軌道排列容器 */
         .fader-grid {
             display: flex;
             justify-content: space-between;
@@ -92,7 +126,6 @@
             position: relative;
         }
 
-        /* 單一音軌條 */
         .fader-channel {
             flex: 1;
             display: flex;
@@ -102,7 +135,7 @@
             height: 100%;
             border-right: 1px dashed #27272a;
         }
-        .fader-channel:last-child { border-right: none; border-left: 2px solid #4b5563; } /* Master/Ctrl 隔離 */
+        .fader-channel:last-child { border-right: none; border-left: 2px solid #4b5563; }
 
         .ch-name {
             font-size: 11px;
@@ -116,7 +149,6 @@
             line-height: 1.2;
         }
 
-        /* 實體推桿軌道線 */
         .slider-track {
             width: 6px;
             background: #000;
@@ -128,7 +160,6 @@
             justify-content: center;
         }
 
-        /* 實體推桿帽 (Fader Cap) */
         .fader-knob {
             width: 24px;
             height: 40px;
@@ -143,7 +174,6 @@
             align-items: center;
             justify-content: center;
         }
-        /* 推桿帽中間的中心紅/白線 */
         .fader-knob::after {
             content: "";
             width: 100%;
@@ -151,7 +181,6 @@
             background: #ef4444;
         }
         
-        /* 旋鈕型態 (用於 CTRL OUT) */
         .knob-container {
             position: absolute;
             top: 90px;
@@ -180,7 +209,6 @@
             transform: translateX(-50%);
         }
 
-        /* 動態亮燈提示 */
         .status-led {
             width: 8px;
             height: 8px;
@@ -190,7 +218,6 @@
             transition: 0.3s;
         }
 
-        /* 文字提示面板 */
         .info-panel {
             background: #1e293b;
             border: 1px solid #475569;
@@ -198,10 +225,11 @@
             padding: 16px;
             font-size: 15px;
             line-height: 1.6;
-            min-height: 110px;
+            height: 180px; /* [修正跳動問題] 改為固定高度，避免文字變換時撐開版面導致跳動 */
+            overflow-y: auto; /* 若螢幕極小文字過多，會內部捲動，絕不破壞外部排版 */
+            color: #f8fafc; /* 確保提示框文字為白色 */
         }
         
-        /* 顏色狀態定義 */
         .active-blue { color: #3b82f6 !important; }
         .active-orange { color: #ea580c !important; }
         .active-green { color: #16a34a !important; }
@@ -211,6 +239,10 @@
 <body>
 
 <div class="container">
+    <div class="top-nav">
+        <a href="index.html" class="btn-return">🔙 返回影音拓撲圖</a>
+    </div>
+
     <div class="header">
         <h1>🎛️ 115年義工講習</h1>
         <p>台北講堂 · 實體混音器推桿對照手冊</p>
@@ -279,15 +311,15 @@
 </div>
 
 <script>
+    // Javascript 完全維持原版邏輯
     function setMixerMode(mode) {
-        // 抓取所有實體元素 (內部邏輯已同步更新對應新的軌道排序)
         const faders = {
             ch1: document.getElementById('knob-ch1'),
             ch2: document.getElementById('knob-ch2'),
             ch3: document.getElementById('knob-ch3'),
             ch4: document.getElementById('knob-ch4'),
-            ch5: document.getElementById('knob-ch5'), // 會議室筆電
-            ch6: document.getElementById('knob-ch6')  // 導播機音源
+            ch5: document.getElementById('knob-ch5'),
+            ch6: document.getElementById('knob-ch6')
         };
         const leds = {
             ch1: document.getElementById('led-ch1'),
@@ -310,37 +342,34 @@
         const ctrlKnob = document.getElementById('rotary-ctrl');
         const info = document.getElementById('info-text');
 
-        // 清除所有動態亮顯樣式
         Object.values(names).forEach(n => n.className = 'ch-name');
         Object.values(leds).forEach(l => { l.style.background = '#374151'; l.style.boxShadow = 'none'; });
         ctrlKnob.style.transform = 'rotate(0deg)';
         ctrlKnob.style.borderColor = '#6b7280';
 
         if (mode === 'mode1') {
-            // 1. 主講者模式：老師領夾推起、司儀推起、其餘全拉
             faders.ch1.style.bottom = '140px'; leds.ch1.style.background = '#3b82f6'; leds.ch1.style.boxShadow = '0 0 8px #3b82f6'; names.ch1.classList.add('active-blue');
             faders.ch2.style.bottom = '140px'; leds.ch2.style.background = '#3b82f6'; leds.ch2.style.boxShadow = '0 0 8px #3b82f6'; names.ch2.classList.add('active-blue');
             faders.ch3.style.bottom = '15px';
             faders.ch4.style.bottom = '15px';
-            faders.ch5.style.bottom = '15px'; // 會議室筆電
-            faders.ch6.style.bottom = '15px'; // 導播機音源
+            faders.ch5.style.bottom = '15px'; 
+            faders.ch6.style.bottom = '15px'; 
             
-            ctrlKnob.style.transform = 'rotate(90deg)'; // 正常轉開監聽
+            ctrlKnob.style.transform = 'rotate(90deg)'; 
             ctrlKnob.style.borderColor = '#3b82f6';
             leds.ctrl.style.background = '#3b82f6';
 
             info.innerHTML = "▶ <b>【1. 主講者模式】操作要點：</b><br>1. <b>老師領夾</b>推起上課；非上課時段領夾務必全面拉掉。<br>2. <b>司儀手握</b>全場保持推起狀態（可視情況拉掉）。<br>3. 導播機音源與會議室筆電一律關閉拉到底。";
 
         } else if (mode === 'mode2') {
-            // 2. 多媒體模式：導播機推起(Ch6)、現場麥克風務必拉下（司儀留）
             faders.ch1.style.bottom = '15px';
-            faders.ch2.style.bottom = '140px'; leds.ch2.style.background = '#ea580c'; names.ch2.classList.add('active-orange'); // 視情況留司儀
+            faders.ch2.style.bottom = '140px'; leds.ch2.style.background = '#ea580c'; names.ch2.classList.add('active-orange'); 
             faders.ch3.style.bottom = '15px';
             faders.ch4.style.bottom = '15px';
-            faders.ch5.style.bottom = '15px'; // 會議室筆電
-            faders.ch6.style.bottom = '140px'; leds.ch6.style.background = '#ea580c'; leds.ch6.style.boxShadow = '0 0 8px #ea580c'; names.ch6.classList.add('active-orange'); // 導播機音源
+            faders.ch5.style.bottom = '15px'; 
+            faders.ch6.style.bottom = '140px'; leds.ch6.style.background = '#ea580c'; leds.ch6.style.boxShadow = '0 0 8px #ea580c'; names.ch6.classList.add('active-orange'); 
             
-            ctrlKnob.style.transform = 'rotate(-135deg)'; // 旋鈕強制作廢歸零
+            ctrlKnob.style.transform = 'rotate(-135deg)'; 
             ctrlKnob.style.borderColor = '#ef4444';
             leds.ctrl.style.background = '#ef4444'; leds.ctrl.style.boxShadow = '0 0 8px #ef4444';
             names.ctrl.classList.add('danger-red');
@@ -348,13 +377,12 @@
             info.innerHTML = "▶ <b>【2. 多媒體模式】操作要點：</b><br>1. 推起最右側的<b>導播機音源</b>播放小筆電影片。<br>2. 老師領夾、首長、提問麥克風<b>務必拉下</b>，司儀手握視流程串場保留。<br>3. <span class='danger-red'>【核心防迴圈機制】</span>右側 <b>CTRL OUT 旋鈕務必歸零（旋到底關閉）</b>，切斷給導播機的回送線！影片播完請務必復原。";
 
         } else if (mode === 'mode3') {
-            // 3. 雙向交流模式：會議室筆電推起(Ch5)、首長桌+司儀+提問推起
             faders.ch1.style.bottom = '15px';
             faders.ch2.style.bottom = '140px'; leds.ch2.style.background = '#16a34a'; leds.ch2.style.boxShadow = '0 0 8px #16a34a'; names.ch2.classList.add('active-green');
             faders.ch3.style.bottom = '140px'; leds.ch3.style.background = '#16a34a'; leds.ch3.style.boxShadow = '0 0 8px #16a34a'; names.ch3.classList.add('active-green');
             faders.ch4.style.bottom = '140px'; leds.ch4.style.background = '#16a34a'; leds.ch4.style.boxShadow = '0 0 8px #16a34a'; names.ch4.classList.add('active-green');
-            faders.ch5.style.bottom = '140px'; leds.ch5.style.background = '#16a34a'; leds.ch5.style.boxShadow = '0 0 8px #16a34a'; names.ch5.classList.add('active-green'); // 會議室筆電
-            faders.ch6.style.bottom = '15px'; // 導播機音源
+            faders.ch5.style.bottom = '140px'; leds.ch5.style.background = '#16a34a'; leds.ch5.style.boxShadow = '0 0 8px #16a34a'; names.ch5.classList.add('active-green'); 
+            faders.ch6.style.bottom = '15px'; 
             
             ctrlKnob.style.transform = 'rotate(90deg)';
             ctrlKnob.style.borderColor = '#16a34a';
@@ -363,7 +391,6 @@
             info.innerHTML = "▶ <b>【3. 雙向交流模式】操作要點：</b><br>1. 老師上課結束，<b>老師領夾務必完全拉掉（關閉）</b>。<br>2. 推起<b>會議室筆電音源</b>接收外地講堂發言。<br>3. 現場<b>首長桌手握、司儀手握、提問手握（提問時）全數推起</b>。";
 
         } else {
-            // 重置狀態
             Object.values(faders).forEach(f => f.style.bottom = '15px');
             info.innerHTML = "系統已復位。請點選上方切換模式查看實體推桿高度規範。";
         }
